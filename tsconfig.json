@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+    ],
+    "allowJs": true,
+    "strict": true,
+    "declaration": true,
+    "outDir": "./lib",
+    "types": ["jest"]
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
