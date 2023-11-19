@@ -8,6 +8,7 @@
     ],
     "allowJs": true,
     "strict": true,
+    "noEmit": true,
     "declaration": true,
     "outDir": "./lib",
     "types": ["jest"]
