@@ -26,7 +26,11 @@ const modifySchema = (zodType: ZodTypeAny, key: string, object: SearchParams): v
       return;
     }
 
-    zodType._def.coerce = true;
+    const value = object[key];
+    if (value !== undefined) {
+      zodType._def.coerce = true;
+    }
+
     return;
   }
 

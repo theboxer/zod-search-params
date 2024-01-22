@@ -30,4 +30,16 @@ describe('Testing empty search params', () => {
     const params = parseSearchParams(schema, {});
     expect(params).toEqual(catchValues);
   });
+
+  test('return catch values for explicit undefined values in search params', () => {
+    const params = parseSearchParams(schema, {
+      string: undefined,
+      number: undefined,
+      boolean: undefined,
+      stringArray: [],
+      numberArray: [],
+      booleanArray: [],
+    });
+    expect(params).toEqual(catchValues);
+  });
 });
