@@ -41,5 +41,17 @@ describe('Testing empty search params', () => {
       booleanArray: [],
     });
     expect(params).toEqual(catchValues);
+
+    const params2 = parseSearchParams(schema, {
+      string: 'ok',
+      boolean: 'false',
+    });
+    expect(params2).toEqual({ ...catchValues, string: 'ok', boolean: false });
+
+    const nextParams = parseSearchParams(schema, {
+      string: undefined,
+      boolean: undefined,
+    });
+    expect(nextParams).toEqual(catchValues);
   });
 });

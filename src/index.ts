@@ -2,6 +2,8 @@ import type { ZodTypeAny, ZodRawShape, ZodObject } from 'zod';
 
 import { MaybeSafeSchema, SearchParams } from './types';
 
+const schemaChanges: ZodTypeAny[] = [];
+
 const modifySchema = (zodType: ZodTypeAny, key: string, object: SearchParams): void => {
   if (zodType._def.typeName === 'ZodBoolean') {
     if (!object || object[key] === undefined) {
@@ -13,7 +15,10 @@ const modifySchema = (zodType: ZodTypeAny, key: string, object: SearchParams): v
       : safeJsonParse(object[key] as string)
         ? 'true'
         : undefined;
+
     zodType._def.coerce = true;
+    schemaChanges.push(zodType._def);
+
     return;
   }
 
@@ -29,6 +34,7 @@ const modifySchema = (zodType: ZodTypeAny, key: string, object: SearchParams): v
     const value = object[key];
     if (value !== undefined) {
       zodType._def.coerce = true;
+      schemaChanges.push(zodType._def);
     }
 
     return;
@@ -39,6 +45,14 @@ const modifySchema = (zodType: ZodTypeAny, key: string, object: SearchParams): v
   }
 
   return;
+};
+
+const revertSchema = (): void => {
+  schemaChanges.forEach((type) => {
+    if ('coerce' in type) {
+      type.coerce = false;
+    }
+  });
 };
 
 const expectsArray = (zodType?: ZodTypeAny): boolean => {
@@ -117,8 +131,12 @@ export const parseSearchParams = <O extends ZodRawShape>(
   );
 
   try {
-    return schema.parse(processedObject);
+    const parsedQuery = schema.parse(processedObject);
+    revertSchema();
+
+    return parsedQuery;
   } catch {
+    revertSchema();
     // @ts-expect-error Undefined is return only in specific case, not sure how to fix this on the types level
     return undefined;
   }

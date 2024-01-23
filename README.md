@@ -13,7 +13,7 @@ yarn add zod-search-params
 ```
 
 ### Define Schema
-
+Do **NOT** use `coerce` in the schema, coerce is applied automatically (to prevent casting `undefined` to `"undefined"` etc.) for enabled types, when it's needed.
 ```ts
 const schema = z.object({
   search: z.string().catch(''),
