@@ -4,6 +4,14 @@
   "private": false,
   "description": "Zod utility for parsing search params",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theboxer/zod-search-params"
+  },
+  "bugs": {
+    "url": "https://github.com/theboxer/zod-search-params/issues"
+  },
+  "homepage": "https://github.com/theboxer/zod-search-params",
   "keywords": [
     "zod",
     "search params",
