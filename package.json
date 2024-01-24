@@ -11,6 +11,7 @@
   "bugs": {
     "url": "https://github.com/theboxer/zod-search-params/issues"
   },
+  "funding": "https://github.com/sponsors/theboxer",
   "homepage": "https://github.com/theboxer/zod-search-params",
   "keywords": [
     "zod",
