@@ -2,7 +2,7 @@ import type { ZodTypeAny, ZodRawShape, ZodObject } from 'zod';
 
 import { MaybeSafeSchema, SearchParams } from './types';
 
-const schemaChanges: ZodTypeAny[] = [];
+let schemaChanges: ZodTypeAny[] = [];
 
 const modifySchema = (zodType: ZodTypeAny, key: string, object: SearchParams): void => {
   if (zodType._def.typeName === 'ZodBoolean') {
@@ -53,6 +53,8 @@ const revertSchema = (): void => {
       type.coerce = false;
     }
   });
+
+  schemaChanges = [];
 };
 
 const expectsArray = (zodType?: ZodTypeAny): boolean => {
