@@ -26,6 +26,10 @@ const modifySchema = (zodType: ZodTypeAny, key: string, object: SearchParams): v
     return modifySchema(zodType._def.type, key, object);
   }
 
+  if (zodType._def.typeName === 'ZodEffects') {
+    return modifySchema(zodType._def.schema, key, object);
+  }
+
   if ('coerce' in zodType._def) {
     if (!object || object[key] === undefined) {
       return;
@@ -64,6 +68,10 @@ const expectsArray = (zodType?: ZodTypeAny): boolean => {
 
   if (zodType._def.typeName === 'ZodLazy') {
     return expectsArray(zodType._def.getter());
+  }
+
+  if (zodType._def.typeName === 'ZodEffects') {
+    return expectsArray(zodType._def.schema);
   }
 
   if ('options' in zodType._def) {
@@ -110,8 +118,9 @@ export const parseSearchParams = <O extends ZodRawShape>(
   schema: ZodObject<O>,
   searchParams?: SearchParams | URLSearchParams,
 ): MaybeSafeSchema<O> => {
-  const object =
-    (isSearchParams(searchParams) ? urlSearchParamsToObject(searchParams) : searchParams) ?? {};
+  const object = structuredClone(
+    (isSearchParams(searchParams) ? urlSearchParamsToObject(searchParams) : searchParams) ?? {},
+  );
 
   const shape = schema._def.shape();
   const allTypes = Object.entries(shape);
