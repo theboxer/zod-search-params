@@ -71,6 +71,10 @@ const expectsArray = (zodType?: ZodTypeAny): boolean => {
   }
 
   if (zodType._def.typeName === 'ZodEffects') {
+    if (zodType._def.effect.type === 'preprocess') {
+      return false;
+    }
+
     return expectsArray(zodType._def.schema);
   }
 
