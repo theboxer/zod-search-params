@@ -1,6 +1,6 @@
-import { z } from 'zod';
+import { z } from 'zod/v3';
 
-import { parseSearchParams } from '../index';
+import { parseSearchParams } from '../../v3';
 
 const schema = z.object({
   strToBool: z

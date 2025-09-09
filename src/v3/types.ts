@@ -1,4 +1,4 @@
-import type { ZodObject, ZodRawShape, ZodTypeAny, infer as zodInfer } from 'zod';
+import type { ZodObject, ZodRawShape, ZodTypeAny, infer as zodInfer } from 'zod/v3';
 
 type HasCatch<O extends ZodTypeAny> = O['_def'] extends { typeName: 'ZodCatch' }
   ? true

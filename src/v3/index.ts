@@ -1,4 +1,4 @@
-import type { ZodTypeAny, ZodRawShape, ZodObject } from 'zod';
+import type { ZodTypeAny, ZodRawShape, ZodObject } from 'zod/v3';
 
 import { MaybeSafeSchema, SearchParams } from './types';
 

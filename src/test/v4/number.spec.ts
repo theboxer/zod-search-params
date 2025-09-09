@@ -1,79 +1,79 @@
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
-import { parseSearchParams } from '../index';
+import { parseSearchParams } from '../../v4';
 
 const catchValues = {
-  string: 'ERROR',
-  stringArray: [],
+  number: 999,
+  numberArray: [],
 };
 
 const schema = z.object({
-  string: z.string().catch(catchValues.string),
-  stringArray: z.array(z.string()).catch(catchValues.stringArray),
+  number: z.coerce.number().catch(catchValues.number),
+  numberArray: z.array(z.coerce.number()).catch(catchValues.numberArray),
 });
 
-describe('Testing strings', () => {
+describe('Testing numbers', () => {
   test('pass numbers', () => {
     const params = parseSearchParams(schema, {
-      string: '123',
-      stringArray: ['123', '456'],
+      number: '123',
+      numberArray: ['123', '456'],
     });
 
     expect(params).toEqual({
-      string: '123',
-      stringArray: ['123', '456'],
+      number: 123,
+      numberArray: [123, 456],
     });
   });
 
   test('pass real numbers', () => {
     const params = parseSearchParams(schema, {
       // @ts-expect-error Number is not allowed by SearchParams type
-      string: 123,
+      number: 123,
       // @ts-expect-error Number is not allowed by SearchParams type
-      stringArray: [123, 456],
+      numberArray: [123, 456],
     });
 
     expect(params).toEqual({
-      string: '123',
-      stringArray: ['123', '456'],
+      number: 123,
+      numberArray: [123, 456],
     });
   });
 
   test('pass strings', () => {
     const params = parseSearchParams(schema, {
-      string: 'test',
-      stringArray: ['test1', 'test2'],
+      number: 'test',
+      numberArray: ['test1', 'test2'],
     });
 
     expect(params).toEqual({
-      string: 'test',
-      stringArray: ['test1', 'test2'],
+      number: 999,
+      numberArray: [],
     });
   });
 
   test('pass booleans', () => {
     const params = parseSearchParams(schema, {
-      string: 'true',
-      stringArray: ['true', 'false'],
+      number: 'true',
+      numberArray: ['true', 'false'],
     });
 
     expect(params).toEqual({
-      string: 'true',
-      stringArray: ['true', 'false'],
+      number: 999,
+      numberArray: [],
     });
   });
 
   test('pass real booleans', () => {
     const params = parseSearchParams(schema, {
       // @ts-expect-error Number is not allowed by SearchParams type
-      string: true,
+      number: true,
       // @ts-expect-error Boolean is not allowed by SearchParams type
-      stringArray: [true, false],
+      numberArray: [true, false],
     });
 
     expect(params).toEqual({
-      string: 'true',
-      stringArray: ['true', 'false'],
+      number: 1,
+      numberArray: [1, 0],
     });
   });
 });

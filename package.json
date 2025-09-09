@@ -1,6 +1,6 @@
 {
   "name": "zod-search-params",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "private": false,
   "description": "Zod utility for parsing search params",
   "license": "MIT",
@@ -23,8 +23,20 @@
     "nextjs",
     "react"
   ],
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "lib/v3/index.js",
+  "types": "lib/v3/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/v3/index.js",
+      "require": "./lib/v3/index.js",
+      "types": "./lib/v3/index.d.ts"
+    },
+    "./v4": {
+      "import": "./lib/v4/index.js",
+      "require": "./lib/v4/index.js",
+      "types": "./lib/v4/index.d.ts"
+    }
+  },
   "files": [
     "lib/**/*"
   ],
@@ -57,11 +69,11 @@
     "prettier": "^3.0.2",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1",
-    "zod": "^3.22.2",
+    "zod": "^4.1.5",
     "eslint": "^8.52.0",
     "typescript": "^5.2.2"
   },
   "peerDependencies": {
-    "zod": "^3.20.0"
+    "zod": "^3.25.0 || ^4.0.0"
   }
 }

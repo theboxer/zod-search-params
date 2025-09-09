@@ -1,6 +1,6 @@
-import { z } from 'zod';
+import { z } from 'zod/v3';
 
-import { parseSearchParams } from '../index';
+import { parseSearchParams } from '../../v3';
 
 describe('Testing arrays', () => {
   test('pass array', () => {
@@ -43,6 +43,29 @@ describe('Testing arrays', () => {
 
     expect(params).toEqual({
       array: [123],
+    });
+  });
+
+  test('pass mixed array', () => {
+    const schema = z.object({
+      mixedArray: z.array(z.number()).or(z.array(z.string())).catch([]),
+    });
+
+    const params = parseSearchParams(schema, {
+      // @ts-expect-error Number is not allowed by SearchParams type
+      mixedArray: 123,
+    });
+
+    expect(params).toEqual({
+      mixedArray: [123],
+    });
+
+    const params2 = parseSearchParams(schema, {
+      mixedArray: '123',
+    });
+
+    expect(params2).toEqual({
+      mixedArray: ['123'],
     });
   });
 
