@@ -119,8 +119,8 @@ const urlSearchParamsToObject = (searchParams: URLSearchParams): SearchParams =>
   }, {} as SearchParams);
 };
 
-export const parseSearchParams = <O extends ZodRawShape>(
-  schema: ZodObject<O>,
+export const parseSearchParams = <O extends ZodObject>(
+  schema: O,
   searchParams?: SearchParams | URLSearchParams,
 ): MaybeSafeSchema<O> => {
   const object = structuredClone(

@@ -1,6 +1,6 @@
-import type { ZodObject, ZodRawShape, infer as zodInfer, ZodType } from 'zod/v4';
+import { ZodObject, ZodRawShape, infer as zodInfer, ZodType } from 'zod/v4';
 
-type HasCatch<O extends ZodType> = O['def'] extends { typeName: 'ZodCatch' }
+type HasCatch<O extends ZodType> = O['def'] extends { type: 'catch' }
   ? true
   : O['def'] extends { innerType: ZodType }
     ? HasCatch<O['def']['innerType']>
@@ -12,10 +12,10 @@ type MappedSchema<T extends ZodRawShape> = {
 
 type AnyHasCatch<T> = T[keyof T] extends never ? true : false;
 
-export type MaybeSafeSchema<O extends ZodRawShape> = AnyHasCatch<
-  MappedSchema<ZodObject<O>['def']['shape']>
+export type MaybeSafeSchema<O extends ZodObject> = AnyHasCatch<
+  MappedSchema<O['def']['shape']>
 > extends true
-  ? zodInfer<ZodObject<O>>
-  : zodInfer<ZodObject<O>> | undefined;
+  ? zodInfer<O>
+  : zodInfer<O> | undefined;
 
 export type SearchParams = Record<string, string | (string | undefined)[] | undefined>;
