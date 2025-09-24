@@ -12,6 +12,15 @@
 yarn add zod-search-params
 ```
 
+### Import
+```ts
+import { parseSearchParams } from 'zod-search-params'; // by default this imports version for zod v3
+// or
+import { parseSearchParams } from 'zod-search-params/v3'; // specifically import version for zod v3
+// or
+import { parseSearchParams } from 'zod-search-params/v4'; // specifically import version for zod v4
+```
+
 ### Define Schema
 Do **NOT** use `coerce` in the schema, coerce is applied automatically (to prevent casting `undefined` to `"undefined"` etc.) for enabled types, when it's needed.
 ```ts
