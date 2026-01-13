@@ -1,6 +1,6 @@
 {
   "name": "zod-search-params",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": false,
   "description": "Zod utility for parsing search params",
   "license": "MIT",
@@ -57,11 +57,11 @@
     "test": "jest",
     "test:types": "tsc --noEmit --esModuleInterop --skipLibCheck --strict src/test/**/types.ts",
     "test:watch": "jest --watchAll",
-    "prepare" : "yarn build",
-    "prepublishOnly" : "yarn test && yarn lint",
-    "preversion" : "yarn lint",
-    "version" : "yarn format && git add -A src",
-    "postversion" : "git push && git push --tags"
+    "prepare": "yarn build",
+    "prepublishOnly": "yarn test && yarn lint",
+    "preversion": "yarn lint",
+    "version": "yarn format && git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "devDependencies": {
     "@types/jest": "^29.5.8",
