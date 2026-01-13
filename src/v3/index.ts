@@ -122,9 +122,10 @@ export const parseSearchParams = <O extends ZodRawShape>(
   schema: ZodObject<O>,
   searchParams?: SearchParams | URLSearchParams,
 ): MaybeSafeSchema<O> => {
-  const object = structuredClone(
-    (isSearchParams(searchParams) ? urlSearchParamsToObject(searchParams) : searchParams) ?? {},
-  );
+  const object = structuredClone({
+    ...((isSearchParams(searchParams) ? urlSearchParamsToObject(searchParams) : searchParams) ??
+      {}),
+  });
 
   const shape = schema._def.shape();
   const allTypes = Object.entries(shape);
